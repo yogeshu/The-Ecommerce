@@ -1,13 +1,21 @@
-import React from 'react'
+import React from "react";
 
+const Context = React.createContext();
 
-const Context = React.createContext()
+function ContextProvider(props) {
+  const [photos, setPhotos] = React.useState([]);
 
-function ContextProvider(props){
-    return (
-        <Context.Provider>
-            {props.children}
-        </Context.Provider>
-    )
+  const url =
+    "https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json";
+
+  React.useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .them((data) => setPhotos(data));
+  }, []);
+
+  return (
+    <Context.Provider value={{ photos }}>{props.children}</Context.Provider>
+  );
 }
-export {ContextProvider, Context}
+export { ContextProvider, Context };
